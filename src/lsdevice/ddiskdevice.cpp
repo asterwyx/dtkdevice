@@ -19,8 +19,8 @@ class DDiskDevicePrivate
 
 public:
     explicit DDiskDevicePrivate(DDiskDevice *parent)
-        : q_ptr(parent)
-        , m_hwNode("computer", hw::sys_tem)
+        : m_hwNode("computer", hw::sys_tem)
+        , q_ptr(parent)
     {
 
         m_listDeviceInfo.clear();
@@ -310,7 +310,7 @@ DDiskDevice::DDiskIoStat DDiskDevice::diskIoStat(int index)
             QTextStream stream(&file);
             QString line = stream.readLine();
             if (!line.isNull()) {
-                QStringList deviceInfo = line.split(" ", QString::SkipEmptyParts);
+                QStringList deviceInfo = line.split(" ", D_SPLIT_BEHAVIOR);
                 if (deviceInfo.size() > 16) { //1-17
                     result.readsCompletedSuccessfully = deviceInfo[0].toULongLong();     // # of reads completed successfully
                     result.readsMerged      = deviceInfo[1].toULongLong();                    // # of reads merged
